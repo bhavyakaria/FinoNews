@@ -23,10 +23,14 @@ class NewsFeedsAdapter(val items : ArrayList<Article>, val context: Context) : R
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.newsHeadline.text = items[position].title
         holder.newsHeadlineImage.load(items[position].urlToImage)
+        holder.newsSource.text = items[position].source!!.name
+        holder.newsPublishedDate.text = items[position].publishedAt
     }
 }
 
 class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
     val newsHeadline = view.text_view_news_headline!!
     val newsHeadlineImage = view.img_view_headline_img!!
+    val newsSource = view.text_view_source!!
+    val newsPublishedDate = view.text_view_published_date!!
 }
