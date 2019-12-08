@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.bhavyakaria.finonews.R
 import com.bhavyakaria.finonews.models.Article
+import com.bhavyakaria.finonews.utils.extensions.parseServerDate
+import com.bhavyakaria.finonews.utils.extensions.removeSourceFromHeadline
 import kotlinx.android.synthetic.main.layout_for_news_feeds.view.*
 
 class NewsFeedsAdapter(val items : ArrayList<Article>, val context: Context) : RecyclerView.Adapter<ViewHolder>() {
@@ -21,10 +23,10 @@ class NewsFeedsAdapter(val items : ArrayList<Article>, val context: Context) : R
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.newsHeadline.text = items[position].title
+        holder.newsHeadline.text = removeSourceFromHeadline(items[position].title)
         holder.newsHeadlineImage.load(items[position].urlToImage)
         holder.newsSource.text = items[position].source!!.name
-        holder.newsPublishedDate.text = items[position].publishedAt
+        holder.newsPublishedDate.text = parseServerDate(items[position].publishedAt)!!.toString()
     }
 }
 
