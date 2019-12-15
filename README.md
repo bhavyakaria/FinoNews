@@ -2,17 +2,17 @@
 
 A news app to showcase the power of **Kotlin**, **Coroutines**  and latest **Android Jetpack**.
 
-Build Instructions:
+## Build Instructions:
 
-## For security purpose the api key is not hardcoded in the code. To run the application, follow the below given steps:
+For security purpose the api key is not hardcoded in the code. To run the application, follow the below given steps:
 
 1. First you have to get an API key from News API(https://newsapi.org).
-2. Then add that key to your ```local.properties``` file.
-```news_org_api_key="sakfnasXXXXXasdklaskd"```
+2. Then add that key to your ```local.properties``` file.<br />ß
+```news_org_api_key="sakfnasXXXXXasdklaskd"```ß≈
 
-Libraries Used:
+## Libraries Used:
 
-## For Networking: Gson + Retrofit
+### For Networking: Gson + Retrofit
 
 I prefer using Retrofit over volley. 
 
