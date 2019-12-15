@@ -34,7 +34,7 @@ class NewsFeedsFragment : Fragment() {
 
         val toolbar: Toolbar = view.findViewById(R.id.toolbar) as Toolbar
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        (activity as AppCompatActivity).supportActionBar!!.elevation = 6.0f
+        activity.supportActionBar!!.elevation = 6.0f
 
         setRecyclerView(recyclerView, articles, activity)
         return view
