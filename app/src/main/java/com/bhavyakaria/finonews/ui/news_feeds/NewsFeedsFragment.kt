@@ -14,9 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhavyakaria.finonews.R
 import com.bhavyakaria.finonews.models.Article
+import com.bhavyakaria.finonews.ui.news_view.NewsViewFragment
+import com.bhavyakaria.finonews.utils.extensions.toast
 
-
-class NewsFeedsFragment : Fragment() {
+class NewsFeedsFragment : Fragment(), NewsFeedsAdapter.ClickListener {
 
     companion object {
         fun newInstance() = NewsFeedsFragment()
@@ -42,7 +43,7 @@ class NewsFeedsFragment : Fragment() {
 
     private fun setRecyclerView(recyclerView: RecyclerView, articles: ArrayList<Article>?, activity: Context) {
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = NewsFeedsAdapter(articles!!, activity)
+        recyclerView.adapter = NewsFeedsAdapter(articles!!, activity, this)
         recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
     }
 
@@ -51,6 +52,21 @@ class NewsFeedsFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(NewsFeedsViewModel::class.java)
     }
 
+    override fun onRowClick(article: Article, view: View) {
+
+        context?.let { toast(it, article.title) }
+
+        val bundle = Bundle()
+        bundle.putParcelable("article", article)
+
+        val fragment : NewsViewFragment = NewsViewFragment.newInstance()
+        fragment.arguments = bundle
+
+        val ft = fragmentManager!!.beginTransaction()
+        ft.replace(R.id.news_feeds_fragment, fragment)
+        ft.commit()
+
+    }
 
 
 }
