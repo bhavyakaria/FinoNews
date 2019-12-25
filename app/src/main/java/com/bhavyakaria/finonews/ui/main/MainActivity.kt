@@ -26,6 +26,12 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
 
+        viewModel.fetchData()
+
+        viewModel.newsList.observe(this) { value ->
+            Log.d("Parzival", value)
+        }
+
         val bundle = Bundle()
         bundle.putParcelableArrayList("newsFeedsList", viewModel.newsList)
 

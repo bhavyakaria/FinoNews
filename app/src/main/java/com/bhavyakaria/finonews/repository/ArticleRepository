@@ -1,0 +1,14 @@
+
+class ArticleRepository(val network: NewsOrgApi) {
+
+    suspend fun fetchArticlesFromNetwork(): LiveData<ArrayList<Article>> {
+        try {
+            val result = withTimeout(5_000) {
+                network.getTopHeadlines("business", "in")
+            }
+            return result
+        } catch (error: Throwable) {
+            throw error
+        }
+    }
+}

@@ -1,29 +1,41 @@
 package com.bhavyakaria.finonews.ui.main
 
 import android.util.Log
+import androidx.annotation.UiThread
 import androidx.lifecycle.ViewModel
 import com.bhavyakaria.finonews.models.Article
 import com.bhavyakaria.finonews.network.ApiFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
-class MainActivityViewModel: ViewModel() {
+class MainActivityViewModel(private val respository: ArticleRepository): ViewModel() {
 
     var newsList : ArrayList<Article> = arrayListOf()
 
-    init {
-        fetchData()
+    fun fetchData() = launchDataLoad {
+        respository.fetchArticlesFromNetwork()
     }
 
-    private fun fetchData(): ArrayList<Article>  {
-        val service = ApiFactory.newsOrgApi
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getTopHeadlines("business", "in")
-            Log.d("Parzival", "Response: "+response.body()?.totalResults)
-            newsList = response.body()!!.articles as ArrayList<Article>
+    /**
+     * Helper function to call a data load function with a loading spinner, errors will trigger a
+     * snackbar.
+     *
+     * By marking `block` as `suspend` this creates a suspend lambda which can call suspend
+     * functions.
+     *
+     * @param block lambda to actually load data. It is called in the viewModelScope. Before calling the
+     *              lambda the loading spinner will display, after completion or error the loading
+     *              spinner will stop
+     */
+    private fun launchDataLoad(block: suspend () -> LiveData<ArrayList<Article>>): Unit{
+        viewModelScope.launch {
+            try {
+                newsList = block()
+            } catch (error: Throwable) {
+
+            } finally {
+
+            }
         }
-        return newsList
     }
 
 }
