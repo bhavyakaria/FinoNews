@@ -47,6 +47,10 @@ class NewsFeedsFragment : Fragment(), NewsFeedsAdapter.ClickListener {
         recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
     }
 
+    fun updateNewsFeeds(article: Article) {
+
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(NewsFeedsViewModel::class.java)
